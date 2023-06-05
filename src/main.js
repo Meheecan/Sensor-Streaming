@@ -105,6 +105,40 @@ var t = [
 Bluetooth.println(t.join(","))
 },temperatureInterval)
 
+NRF.setScan(function(device) {
+    if (device.id == deviceid1) {
+        d = getDate();
+        var rssi1 = [
+            "Sensor1",
+            device.rssi,
+            device.id,
+            d
+        ];
+        Bluetooth.println(rssi1.join(","));
+    
+    }
+    if (device.id == deviceid2){
+        d = getDate();
+        var rssi2 = [
+            "Sensor2",
+            device.rssi,
+            device.id,
+            d
+        ];
+        Bluetooth.println(rssi2.join(","))
+    }
+    if (device.id == deviceid3){
+        d = getDate();
+        var rssi3 = [
+            "Sensor3",
+            device.rssi,
+            device.id,
+            d
+        ];
+        Bluetooth.println(rssi3.join(","))
+    }
+},{ filters: [{ id: deviceid1 },{id:deviceid2},{id:deviceid3}] });
+
 `
 
       // When we click the connect button...
@@ -179,28 +213,7 @@ Bluetooth.println(t.join(","))
       var dataTemperature = [["Value[celcius]", "Time received", "Time sent"]];
       var dataAcceleration = [["x", "y", "z", "Time received", "Time sent"]];
       var dataMagnetometer = [["x", "y", "z", "Time received", "Time sent"]];
-      /*function createChart (name,title,id,xlab,ylab,data)
-      {
-          var name = new CanvasJS.Chart(id,
-          {
-              title: {
-                  text: title
-              },
-              axisY:{
-                  title: ylab
-              },
-              axisX:{
-                  title:xlab,
-                  valueFormatString: "HH:mm:ss"
-              },
-              legend:{
-                  horizontalAlign:"center",
-                  verticalAlign:"top",
-                  fontSize:12
-              },
-
-          })
-      }*/
+     
       //charts
       var chartRSSI = new CanvasJS.Chart("chartRSSI", {
           title: {
@@ -402,7 +415,6 @@ Bluetooth.println(t.join(","))
 
       var updateAccelOrMagnet = function (x, y, z, dataX, dataY, dataZ, storageArray, dateSent) {
           if (dataX.length <= dataLength) {
-              //labelVal = new Date().toISOString();
               xVal = new Date(dateSent);
               dateReceived = getDate();
               yValx = x * 1;
@@ -445,7 +457,6 @@ Bluetooth.println(t.join(","))
               y = d[2];
               z = d[3];
               dateSent = d[4];
-              //datePre = d[4].split(" ");
               updateAccelOrMagnet(x, y, z, Ax, Ay, Az, dataAcceleration, dateSent)
           }
           if (d.length == 5 && d[0] == "M") {
