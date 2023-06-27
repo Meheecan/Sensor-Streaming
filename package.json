@@ -22,6 +22,7 @@
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
+    "csv": "^6.3.1",
     "fs": "^0.0.1-security",
     "fs-storage": "^0.0.2"
   }
